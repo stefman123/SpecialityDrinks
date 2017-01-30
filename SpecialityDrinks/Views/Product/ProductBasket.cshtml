@@ -1,0 +1,81 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "ProductBasket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Product Basket</h2>
+
+<form id="wishListProducts">
+
+    <div>
+        <label>Product</label>
+        <div class="p-container">
+            <input id="product" type="text" value="" class="form-control" />
+        </div>
+    </div>
+
+</form>
+
+<div class="row">
+    <div class="col-md-4">
+        <ul id="products" class="list-group"></ul>
+    </div>
+</div>
+
+
+@section scripts
+{
+<script>
+        $(document).ready(function() {
+
+            var vm = {
+                productIds:[]
+            };
+
+            var products = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/api/products?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#product').typeahead({
+                highlight: true,
+                minLength: 1
+            }, {
+                name: 'products',
+                display: 'name',
+                source: products
+            }).on("typeahead:select", function(e, product) {
+
+                $("#products").append("<li class='list-group-item'>" + product.name + "</li>");
+                $("#product").typeahead("val", "");
+
+                vm.productIds.push(product.id);
+
+            });;
+
+            $("#wishListProducts").submit(function(e) {
+
+                e.preventDefault();
+
+                $.ajax({
+                        url: "/api/",
+                        method: "post",
+                        data: vm
+                    }).done(function() {
+                        console.log("done");
+                    })
+                    .fail(function() {
+                        console.log("fail");
+                    });
+
+            });
+        });
+
+</script>
+}

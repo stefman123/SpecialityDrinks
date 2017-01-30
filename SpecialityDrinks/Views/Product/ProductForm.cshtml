@@ -1,0 +1,46 @@
+﻿@model SpecialityDrinks.ViewModel.ProductFormViewModel
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Title</h2>
+@Html.ValidationSummary(true, "Please fix the following errors")
+ @using (Html.BeginForm("Save","Product"))
+ {
+<div class="form-section">
+    @Html.LabelFor(m => m.Name)
+    @Html.TextAreaFor( m => m.Name, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Name)
+</div>
+<div class="form-section">
+    @Html.LabelFor(m => m.Brand)
+    @Html.TextBoxFor(m => m.Brand, new { @class = "form-control" })
+</div>
+<div class="form-section">
+    @Html.LabelFor(m => m.Price)
+    @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+</div>
+<div class="form-section">
+    @Html.LabelFor(m => m.Size)
+    @Html.TextBoxFor(m => m.Size, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Size)
+</div>
+<div class="form-section">
+    @Html.LabelFor(m => m.Strength)
+    @Html.TextBoxFor(m => m.Strength, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Strength)
+</div>
+
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Created)
+
+<button type="submit" class="btn btn-primary">Save</button>
+
+ }
+@section scripts
+{
+
+    @Scripts.Render("~/bundles/jqueryval")
+}

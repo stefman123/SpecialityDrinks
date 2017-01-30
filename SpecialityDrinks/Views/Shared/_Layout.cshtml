@@ -1,0 +1,41 @@
+﻿@using RedWillow.MvcToastrFlash
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body class="override container">
+    <div id="container">
+        <div class="CentreHori">
+
+            @Html.ActionLink("Application name", "Index", "Home", null, new { @class = "home" })
+        </div>
+
+        <nav class="navbar-centre">
+            <li> <a>@Html.ActionLink("Home", "Index", "Home")</a> </li>
+            <li><a>@Html.ActionLink("About", "About", "Home")</a></li>
+            <li><a>@Html.ActionLink("Contact", "Contact", "Home")</a></li>
+            <li> <a>@Html.ActionLink("Product", "Products", "Product")</a></li>
+            <li> <a>@Html.ActionLink("New Product", "AddProduct", "Product")</a></li>
+            <li> <a>@Html.ActionLink("Search Product", "ProductBasket", "Product")</a></li>
+        </nav>
+
+
+        <div class="body-content">
+            @RenderBody()
+            <hr />
+            <footer class="site-footer">
+                <p>&copy; @DateTime.Now.Year - Speciality Drink Application</p>
+            </footer>
+        </div>
+</div>
+        @Scripts.Render("~/bundles/lib")
+        @RenderSection("scripts", false)
+        @Html.ToastrNotifications()
+</body>
+</html>
